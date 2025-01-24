@@ -1,6 +1,7 @@
 package org.example.service;
 
 import org.example.model.*;
+import org.example.model.lists.UserRole;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;

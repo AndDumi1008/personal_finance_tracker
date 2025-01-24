@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add/Edit Financial Operation</title>
+    <script>
+        function handleResponse(event) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: form.method,
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Transaction has been saved");
+                    window.close();
+                } else {
+                    document.getElementById("error-message").innerText = data.message;
+                }
+            })
+            .catch(error => {
+                document.getElementById("error-message").innerText = "An error occurred while saving the transaction.";
+            });
+        }
+    </script>
+</head>
+<body>
+<h1 th:text="${operation.id != null} ? 'Edit Financial Operation' : 'Add New Financial Operation'"></h1>
+<form th:action="@{/saveOperation}" th:object="${operation}" method="post" onsubmit="handleResponse(event)">
+    <input type="hidden" th:field="*{id}"/>
+    <div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" th:field="*{date}" required/>
+    </div>
+    <div>
+        <label for="details">Transaction Details:</label>
+        <textarea id="details" name="details" required></textarea>
+    </div>
+    <div>
+        <label for="currency">Currency:</label>
+        <select id="currency" th:field="*{currency}" required>
+            <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" th:field="*{amount}" step="0.01" required/>
+    </div>
+    <div>
+        <label for="operationType">Transaction Type:</label>
+        <select id="operationType" th:field="*{operationType}" required>
+            <option th:each="type : ${T(org.example.model.lists.FinancialOperationTransactionType).values()}"
+                    th:value="${type}" th:text="${type.getDisplayName()}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="location">Location:</label>
+        <input type="text" id="location" th:field="*{location}" required/>
+    </div>
+    <div>
+        <label for="category">Category:</label>
+        <select id="category" th:field="*{category}" required>
+            <option th:each="category : ${categories}" th:value="${category}"
+                    th:text="${category.getDisplayName()}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="recurrent">Recurrent:</label>
+        <input type="checkbox" id="recurrent" th:field="*{recurrent}"/>
+    </div>
+    <div>
+        <label for="customerNotes">Customer Notes:</label>
+        <textarea id="customerNotes" th:field="*{customerNotes}"></textarea>
+    </div>
+    <div>
+        <button type="submit">Save</button>
+        <a href="#" onclick="window.close(); return false;">Cancel</a>
+    </div>
+    <div id="error-message" style="color: red;"></div>
+</form>
+</body>
+</html>
