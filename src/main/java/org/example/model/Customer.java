@@ -21,6 +21,7 @@ public class Customer {
     private String lastName;
     @Column(name = "account_id")
     private Long accountId;
-    @CreatedDate @Column(name = "creation_date")
+    @CreatedDate
+    @Column(name = "creation_date")
     private Date creation_date;
 }

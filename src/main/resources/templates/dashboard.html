@@ -2,6 +2,33 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard</title>
+    <script>
+        function handleCheckboxChange() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"][name="selectedOperation"]');
+            const selectedCheckboxes = Array.from(checkboxes).filter(checkbox => checkbox.checked);
+            const editButton = document.getElementById("editButton");
+            const errorMessage = document.getElementById("error-message");
+
+            if (selectedCheckboxes.length === 1) {
+                editButton.disabled = false;
+                errorMessage.innerText = "";
+            } else if (selectedCheckboxes.length > 1) {
+                editButton.disabled = true;
+                errorMessage.innerText = "You can edit only one transaction at a time";
+            } else {
+                editButton.disabled = true;
+                errorMessage.innerText = "";
+            }
+        }
+
+        function editTransaction() {
+            const selectedCheckbox = document.querySelector('input[type="checkbox"][name="selectedOperation"]:checked');
+            if (selectedCheckbox) {
+                const operationId = selectedCheckbox.value;
+                window.open(`/operation/edit/${operationId}`, 'pagename', 'resizable,height=500,width=1000');
+            }
+        }
+    </script>
 </head>
 <body>
 <h1>Personal Financial Tracker</h1>
@@ -14,10 +41,13 @@
     <button onClick="window.open('/operation/new','pagename','resizable,height=500,width=1000'); return false;">
         Add new transaction
     </button>
+    <button id="editButton" onClick="editTransaction()" disabled>Edit Transaction</button>
 </div>
+<div id="error-message" style="color: red;"></div>
 <table border="1">
     <thead>
     <tr>
+        <th>Select</th>
         <th>Date</th>
         <th>Transaction Details</th>
         <th>Currency</th>
@@ -31,6 +61,7 @@
     </thead>
     <tbody>
     <tr th:each="operation : ${operations}">
+        <td><input type="checkbox" name="selectedOperation" th:value="${operation.id}" onChange="handleCheckboxChange()"></td>
         <td th:text="${#dates.format(operation.date, 'yyyy-MM-dd')}"></td>
         <td th:utext="${operation.formattedDetails}"></td>
         <td th:text="${operation.currency}"></td>

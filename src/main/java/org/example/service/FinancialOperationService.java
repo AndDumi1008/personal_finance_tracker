@@ -29,7 +29,7 @@ public class FinancialOperationService {
         financialOperationRepository.save(operation);
     }
 
-    public FinancialOperation parseAndSetDetails(FinancialOperation operation,String details) {
+    public FinancialOperation parseAndSetDetails(FinancialOperation operation, String details) {
         Map<String, String> parsedDetails = Arrays.stream(details.split("\n"))
                 .map(line -> line.split(":"))
                 .filter(parts -> parts.length == 2)
@@ -41,5 +41,9 @@ public class FinancialOperationService {
     public FinancialOperation setUser(FinancialOperation operation, UserModel user) {
         operation.setUser(user);
         return operation;
+    }
+
+    public FinancialOperation findById(Long id) {
+        return financialOperationRepository.findById(id).orElse(null);
     }
 }
