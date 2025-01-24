@@ -55,7 +55,9 @@ public class FinancialOperationController {
     @GetMapping("/operation/edit/{id}")
     public String editOperation(@PathVariable Long id, Model model) {
         FinancialOperation operation = financialOperationService.findById(id);
+        String details = financialOperationService.reverseParseAndSetDetails(operation);
         model.addAttribute("operation", operation);
+        model.addAttribute("details", details);
         model.addAttribute("currencies", FinancialOperationCurrency.values());
         model.addAttribute("categories", FinancialOperationCategory.values());
         return "financial-operation";

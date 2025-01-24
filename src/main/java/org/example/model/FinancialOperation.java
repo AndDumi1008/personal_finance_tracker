@@ -33,13 +33,8 @@ public class FinancialOperation {
 
     private String currency;
     private double amount;
-
     private String location;
-
     private String category;
-
-//    private String subcategory;
-
     private boolean isRecurrent;
 
     @Column(name = "customer_notes")
@@ -59,7 +54,6 @@ public class FinancialOperation {
 
     @Column(name = "deleted", nullable = false)
     private boolean deleted = false;
-
 
     public String getFormattedDetails() {
         StringBuilder formattedDetails = new StringBuilder();
