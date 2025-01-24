@@ -57,6 +57,9 @@ public class FinancialOperation {
     @Temporal(TemporalType.TIMESTAMP)
     private Date creationDate;
 
+    @Column(name = "deleted", nullable = false)
+    private boolean deleted = false;
+
 
     public String getFormattedDetails() {
         StringBuilder formattedDetails = new StringBuilder();

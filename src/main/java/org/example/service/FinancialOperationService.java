@@ -46,4 +46,15 @@ public class FinancialOperationService {
     public FinancialOperation findById(Long id) {
         return financialOperationRepository.findById(id).orElse(null);
     }
+
+
+    public void markAsRemoved(Long id, Long userId) {
+        FinancialOperation operation = financialOperationRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Operation not found"));
+        if (!operation.getUser().getId().equals(userId)) {
+            throw new IllegalArgumentException("User does not have permission to modify this operation");
+        }
+        operation.setDeleted(true);
+        financialOperationRepository.save(operation);
+    }
 }

@@ -6,6 +6,8 @@ import org.example.model.lists.FinancialOperationCurrency;
 import org.example.service.FinancialOperationService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -57,6 +59,21 @@ public class FinancialOperationController {
         model.addAttribute("currencies", FinancialOperationCurrency.values());
         model.addAttribute("categories", FinancialOperationCategory.values());
         return "financial-operation";
+    }
+
+    @PostMapping("/markAsRemoved")
+    @ResponseBody
+    public Map<String, Object> markAsRemoved(@RequestParam Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Long userId = userService.findByUsername(userDetails.getUsername()).getId();
+            financialOperationService.markAsRemoved(id, userId);
+            response.put("success", true);
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("message", e.getMessage());
+        }
+        return response;
     }
 
 }
