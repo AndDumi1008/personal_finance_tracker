@@ -57,4 +57,10 @@ public class FinancialOperationService {
         operation.setDeleted(true);
         financialOperationRepository.save(operation);
     }
+
+    public String reverseParseAndSetDetails(FinancialOperation operation) {
+        return operation.getParsedDetails().entrySet().stream()
+                .map(entry -> entry.getKey() + ": " + entry.getValue())
+                .collect(Collectors.joining("\n"));
+    }
 }
