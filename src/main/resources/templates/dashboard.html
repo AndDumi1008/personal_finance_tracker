@@ -10,9 +10,11 @@
 <div th:if="${error}">
     <p th:text="${error}" style="color: red;"></p>
 </div>
-<button onClick="window.open('https://www.w3schools.com','pagename','resizable,height=500,width=1000'); return false;">
-    Add new transaction
-</button>
+<div>
+    <button onClick="window.open('/operation/new','pagename','resizable,height=500,width=1000'); return false;">
+        Add new transaction
+    </button>
+</div>
 <table border="1">
     <thead>
     <tr>
@@ -20,6 +22,7 @@
         <th>Transaction Details</th>
         <th>Currency</th>
         <th>Amount</th>
+        <th>Transaction Type</th>
         <th>Location</th>
         <th>Category</th>
         <th>Recurrent</th>
@@ -28,10 +31,11 @@
     </thead>
     <tbody>
     <tr th:each="operation : ${operations}">
-        <td th:text="${operation.date}"></td>
+        <td th:text="${#dates.format(operation.date, 'yyyy-MM-dd')}"></td>
         <td th:utext="${operation.formattedDetails}"></td>
         <td th:text="${operation.currency}"></td>
         <td th:text="${operation.amount}"></td>
+        <td th:text="${operation.operationType}"></td>
         <td th:text="${operation.location}"></td>
         <td th:text="${operation.category}"></td>
         <td th:text="${operation.isRecurrent ? 'Yes' : 'No'}"></td>
