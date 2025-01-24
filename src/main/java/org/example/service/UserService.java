@@ -1,6 +1,9 @@
 package org.example.service;
 
-import org.example.model.*;
+import org.example.model.Customer;
+import org.example.model.FinancialOperation;
+import org.example.model.RegisterUser;
+import org.example.model.UserModel;
 import org.example.model.lists.UserRole;
 import org.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
