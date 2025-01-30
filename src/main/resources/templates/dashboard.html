@@ -21,6 +21,17 @@
     <button id="deleteButton" onClick="markForDelete()" disabled>Mark for Delete</button>
 </div>
 <div id="error-message" style="color: red;"></div>
+<form th:action="@{/dashboard}" method="get">
+    <label for="currency">Currency:</label>
+    <select id="currency" name="currency" required>
+        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}" value=""></option>
+    </select>
+    <label for="category">Category:</label>
+    <select id="category" name="category" required>
+        <option th:each="category : ${categories}" th:value="${category}" th:text="${category.getDisplayName()}" value=""></option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
 <table border="1">
     <thead>
     <tr>

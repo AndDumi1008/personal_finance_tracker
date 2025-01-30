@@ -63,4 +63,8 @@ public class FinancialOperationService {
                 .map(entry -> entry.getKey() + ": " + entry.getValue())
                 .collect(Collectors.joining("\n"));
     }
+
+    public List<FinancialOperation> filterOperations(Long userId, String currency, String category) {
+        return financialOperationRepository.findByUserIdAndCurrencyAndCategory(userId, currency, category);
+    }
 }

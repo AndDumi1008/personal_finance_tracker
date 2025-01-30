@@ -1,8 +1,10 @@
 package org.example.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.util.Date;
@@ -10,6 +12,8 @@ import java.util.Date;
 @Data
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "customer")
 public class Customer {
     @Id
@@ -21,7 +25,6 @@ public class Customer {
     private String lastName;
     @Column(name = "account_id")
     private Long accountId;
-    @CreatedDate
     @Column(name = "creation_date")
     private Date creation_date;
 }

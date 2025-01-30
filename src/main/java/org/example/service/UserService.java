@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,6 +62,7 @@ public class UserService implements UserDetailsService {
                 .firstName(registerUser.getFirstName())
                 .lastName(registerUser.getLastName())
                 .accountId(createdUserModel.getId())
+                .creation_date(new Date())
                 .build();
         // Add logic to save the customer to the database
         customerService.save(customer);
@@ -82,6 +84,10 @@ public class UserService implements UserDetailsService {
             throw new IllegalArgumentException("User not found");
         }
         return financialOperationService.findByUserId(user.getId());
+    }
+
+    public UserModel getUser(String username) {
+        return findByUsername(username);
     }
 
 }

@@ -16,4 +16,7 @@ public interface FinancialOperationRepository extends JpaRepository<FinancialOpe
 
     @Query("SELECT f FROM FinancialOperation f WHERE f.id = :id AND f.deleted = false")
     Optional<FinancialOperation> findById(@Param("id") Long id);
+
+    List<FinancialOperation> findByUserIdAndCurrencyAndCategory(Long userId, String currency, String category);
+
 }
