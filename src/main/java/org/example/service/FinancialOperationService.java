@@ -65,6 +65,15 @@ public class FinancialOperationService {
     }
 
     public List<FinancialOperation> filterOperations(Long userId, String currency, String category) {
-        return financialOperationRepository.findByUserIdAndCurrencyAndCategory(userId, currency, category);
+        if(!currency.isEmpty() && !category.isEmpty()) {
+            return financialOperationRepository.findByUserIdAndCurrencyAndCategory(userId, currency, category);
+        }
+        if(!currency.isEmpty() ) {
+            return financialOperationRepository.findByUserIdAndCurrency(userId, currency);
+        }
+        if(!category.isEmpty()) {
+            return financialOperationRepository.findByUserIdAndCategory(userId, category);
+        }
+        return null;
     }
 }

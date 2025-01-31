@@ -9,7 +9,6 @@
 <body>
 <h1>Personal Financial Tracker</h1>
 <h2>Welcome, <span th:text="${username}"></span></h2>
-<a href="/logout">Logout</a>
 <div th:if="${error}">
     <p th:text="${error}" style="color: red;"></p>
 </div>
@@ -23,12 +22,14 @@
 <div id="error-message" style="color: red;"></div>
 <form th:action="@{/dashboard}" method="get">
     <label for="currency">Currency:</label>
-    <select id="currency" name="currency" required>
-        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}" value=""></option>
+    <select id="currency" name="currency">
+        <option value="">Select Currency</option>
+        <option th:each="currency : ${currencies}" th:value="${currency}" th:text="${currency}"></option>
     </select>
     <label for="category">Category:</label>
-    <select id="category" name="category" required>
-        <option th:each="category : ${categories}" th:value="${category}" th:text="${category.getDisplayName()}" value=""></option>
+    <select id="category" name="category">
+        <option value="">Select Category</option>
+        <option th:each="category : ${categories}" th:value="${category}" th:text="${category.getDisplayName()}"></option>
     </select>
     <button type="submit">Filter</button>
 </form>
@@ -63,5 +64,8 @@
     </tr>
     </tbody>
 </table>
+<bottom>
+    <a href="/logout">Logout</a>
+</bottom>
 </body>
 </html>

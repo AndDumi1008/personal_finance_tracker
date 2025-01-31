@@ -19,4 +19,10 @@ public interface FinancialOperationRepository extends JpaRepository<FinancialOpe
 
     List<FinancialOperation> findByUserIdAndCurrencyAndCategory(Long userId, String currency, String category);
 
+    @Query("SELECT f FROM FinancialOperation f WHERE f.user.id = :userId AND f.currency = :currency AND f.deleted = false")
+    List<FinancialOperation> findByUserIdAndCurrency(@Param("userId") Long userId, @Param("currency") String currency);
+
+    @Query("SELECT f FROM FinancialOperation f WHERE f.user.id = :userId AND f.category = :category AND f.deleted = false")
+    List<FinancialOperation> findByUserIdAndCategory(@Param("userId") Long userId, @Param("category") String category);
+
 }

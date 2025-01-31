@@ -33,8 +33,8 @@ public class DashboardController {
 
     @GetMapping("/dashboard")
     public String dashboard(Model model,
-                            @RequestParam(required = false) String currency,
-                            @RequestParam(required = false) String category) {
+                            @RequestParam(required = false, defaultValue = "") String currency,
+                            @RequestParam(required = false, defaultValue = "") String category) {
         model.addAttribute("currencies", FinancialOperationCurrency.values());
         model.addAttribute("categories", FinancialOperationCategory.values());
         if (securityService.isAuthenticated()) {
@@ -42,11 +42,12 @@ public class DashboardController {
             try {
                 Customer customer = customerService.getCustomer(user.getId());
                 List<FinancialOperation> operations;
-//                if (currency != null || category != null) {
-//                    operations = financialOperationService.filterOperations(user.getId(), currency, category);
-//                } else {
+                if (!category.isEmpty() || !currency.isEmpty()) {
+                    operations = financialOperationService.filterOperations(user.getId(), currency, category);
+
+                } else {
                     operations = userService.getUserOperations(user.getUsername());
-//                }
+                }
                 model.addAttribute("operations", operations);
                 model.addAttribute("username", customer.getFirstName());
             } catch (Exception e) {
