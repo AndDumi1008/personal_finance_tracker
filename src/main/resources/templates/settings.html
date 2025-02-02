@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script th:src="@{/js/financial-operations.js}"></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="topnav">
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
+<div class="container">
+    <div class="sidebar">
+        <ul>
+            <li onclick="showContent('account')">Account</li>
+            <li onclick="showContent('privacy')">Privacy</li>
+            <li onclick="showContent('budget')">Budget</li>
+        </ul>
+    </div>
+    <div class="content">
+        <div id="account" class="active">
+            <h2>Account Settings</h2>
+            <p>Here you can update your account settings.</p>
+        </div>
+        <div id="privacy">
+            <h2>Privacy Settings</h2>
+            <p>Here you can update your privacy settings.</p>
+        </div>
+        <div id="budget">
+            <h2>Budget Settings</h2>
+            <form th:action="@{/settings/budget}" method="post">
+                <div th:each="category : ${categories}" class="budget-item">
+                    <!--                    <label th:for="${'budget-' + category}" th:text="${category}"></label>-->
+                    <!--                    <input type="number" th:id="${'budget-' + category}" th:name="${'budget[' + category + ']'}" min="0" step="0.01" required>-->
+                    <label th:for="${'budget-' + category}" th:text="${category}">${category}</label>
+                    <input type="number"  min="0" step="0.01" required>
+                </div>
+                <button type="submit">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
+</body>
+</html>

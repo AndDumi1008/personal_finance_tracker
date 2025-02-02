@@ -98,3 +98,9 @@ function markForDelete() {
         });
     });
 }
+
+function showContent(section) {
+    const contents = document.querySelectorAll('.content div');
+    contents.forEach(content => content.classList.remove('active'));
+    document.getElementById(section).classList.add('active');
+}
