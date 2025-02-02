@@ -5,12 +5,20 @@
     <meta name="_csrf" th:content="${_csrf.token}"/>
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script th:src="@{/js/financial-operations.js}"></script>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
 <body>
+<div class="topnav">
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/settings">Settings</a>
+        <a href="/logout">Logout</a>
+    </div>
+</div>
 <h1>Personal Financial Tracker</h1>
 <h2>Welcome, <span th:text="${username}"></span></h2>
 <div th:if="${error}">
-    <p th:text="${error}" style="color: red;"></p>
+    <p th:text="${error}" id="error"></p>
 </div>
 <div>
     <button onClick="window.open('/operation/new','pagename','resizable,height=500,width=1000'); return false;">
@@ -19,7 +27,7 @@
     <button id="editButton" onClick="editTransaction()" disabled>Edit Transaction</button>
     <button id="deleteButton" onClick="markForDelete()" disabled>Mark for Delete</button>
 </div>
-<div id="error-message" style="color: red;"></div>
+<div id="error-message error"></div>
 <form th:action="@{/dashboard}" method="get">
     <label for="currency">Currency:</label>
     <select id="currency" name="currency">
@@ -29,7 +37,8 @@
     <label for="category">Category:</label>
     <select id="category" name="category">
         <option value="">Select Category</option>
-        <option th:each="category : ${categories}" th:value="${category}" th:text="${category.getDisplayName()}"></option>
+        <option th:each="category : ${categories}" th:value="${category}"
+                th:text="${category.getDisplayName()}"></option>
     </select>
     <button type="submit">Filter</button>
 </form>
@@ -64,8 +73,12 @@
     </tr>
     </tbody>
 </table>
-<bottom>
-    <a href="/logout">Logout</a>
-</bottom>
+
+<!--<div class="bottom">-->
+<!--    <div>-->
+<!--        <a href="/settings">Settings</a>-->
+<!--        <a href="/logout">Logout</a>-->
+<!--    </div>-->
+<!--</div>-->
 </body>
 </html>
