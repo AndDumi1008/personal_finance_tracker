@@ -15,5 +15,11 @@ public class CustomerService {
         customerRepository.save(customer);
     }
 
+    public Customer getCustomer(Long id) {
+
+        Customer returnedCustomer = customerRepository.findByAccountId(id);
+        return returnedCustomer;
+    }
+
 
 }
