@@ -23,14 +23,14 @@ public class UserService implements UserDetailsService {
 
     private UserRepository userRepository;
     private CustomerService customerService;
-    private FinancialOperationService financialOperationService;
+    private FOService FOService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, CustomerService customerService, FinancialOperationService financialOperationService) {
+    public UserService(UserRepository userRepository, CustomerService customerService, FOService FOService) {
         this.userRepository = userRepository;
         this.customerService = customerService;
-        this.financialOperationService = financialOperationService;
+        this.FOService = FOService;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
@@ -83,7 +83,7 @@ public class UserService implements UserDetailsService {
         if (user == null) {
             throw new IllegalArgumentException("User not found");
         }
-        return financialOperationService.findByUserId(user.getId());
+        return FOService.findByUserId(user.getId());
     }
 
     public UserModel getUser(String username) {

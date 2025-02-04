@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.model.FinancialOperation;
 import org.example.model.UserModel;
-import org.example.repository.FinancialOperationRepository;
+import org.example.repository.FORepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class FinancialOperationService {
+public class FOService {
 
-    private final FinancialOperationRepository financialOperationRepository;
+    private final FORepository financialOperationRepository;
 
     @Autowired
-    public FinancialOperationService(FinancialOperationRepository financialOperationRepository) {
+    public FOService(FORepository financialOperationRepository) {
         this.financialOperationRepository = financialOperationRepository;
     }
 

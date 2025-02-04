@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface FinancialOperationTransactionTypeRepository extends JpaRepository<FinancialOperationTransactionType, Long> {
+public interface FOTransactionTypeRepository extends JpaRepository<FinancialOperationTransactionType, Long> {
 }

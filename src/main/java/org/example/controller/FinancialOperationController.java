@@ -3,7 +3,7 @@ package org.example.controller;
 import org.example.model.FinancialOperation;
 import org.example.model.lists.FinancialOperationCategory;
 import org.example.model.lists.FinancialOperationCurrency;
-import org.example.service.FinancialOperationService;
+import org.example.service.FOService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,12 +19,12 @@ import java.util.Map;
 @Controller
 public class FinancialOperationController {
 
-    private final FinancialOperationService financialOperationService;
+    private final FOService FOService;
     private final UserService userService;
 
     @Autowired
-    public FinancialOperationController(FinancialOperationService financialOperationService, UserService userService) {
-        this.financialOperationService = financialOperationService;
+    public FinancialOperationController(FOService FOService, UserService userService) {
+        this.FOService = FOService;
         this.userService = userService;
     }
 
@@ -41,9 +41,9 @@ public class FinancialOperationController {
     public Map<String, Object> saveOperation(@ModelAttribute("operation") FinancialOperation operation, String details, Principal principal) {
         Map<String, Object> response = new HashMap<>();
         try {
-            operation = financialOperationService.parseAndSetDetails(operation, details);
-            operation = financialOperationService.setUser(operation, userService.findByUsername(principal.getName()));
-            financialOperationService.saveOperation(operation);
+            operation = FOService.parseAndSetDetails(operation, details);
+            operation = FOService.setUser(operation, userService.findByUsername(principal.getName()));
+            FOService.saveOperation(operation);
             response.put("success", true);
         } catch (Exception e) {
             response.put("success", false);
@@ -54,8 +54,8 @@ public class FinancialOperationController {
 
     @GetMapping("/operation/edit/{id}")
     public String editOperation(@PathVariable Long id, Model model) {
-        FinancialOperation operation = financialOperationService.findById(id);
-        String details = financialOperationService.reverseParseAndSetDetails(operation);
+        FinancialOperation operation = FOService.findById(id);
+        String details = FOService.reverseParseAndSetDetails(operation);
         model.addAttribute("operation", operation);
         model.addAttribute("details", details);
         model.addAttribute("currencies", FinancialOperationCurrency.values());
@@ -69,7 +69,7 @@ public class FinancialOperationController {
         Map<String, Object> response = new HashMap<>();
         try {
             Long userId = userService.findByUsername(userDetails.getUsername()).getId();
-            financialOperationService.markAsRemoved(id, userId);
+            FOService.markAsRemoved(id, userId);
             response.put("success", true);
         } catch (Exception e) {
             response.put("success", false);

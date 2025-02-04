@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FinancialOperationRepository extends JpaRepository<FinancialOperation, Long> {
+public interface FORepository extends JpaRepository<FinancialOperation, Long> {
     @Query("SELECT f FROM FinancialOperation f WHERE f.user.id = :userId AND f.deleted = false")
     List<FinancialOperation> findByUserId(@Param("userId") Long userId);
 
