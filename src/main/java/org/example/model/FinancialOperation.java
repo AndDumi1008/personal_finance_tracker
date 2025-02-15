@@ -12,7 +12,7 @@ import java.util.Map;
 @Getter
 @Setter
 @Entity
-@Table(name = "financial_operations")
+@Table(name = "FINANCIAL_OPERATIONS")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

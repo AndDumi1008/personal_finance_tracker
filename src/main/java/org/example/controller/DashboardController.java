@@ -6,7 +6,7 @@ import org.example.model.UserModel;
 import org.example.model.lists.FinancialOperationCategory;
 import org.example.model.lists.FinancialOperationCurrency;
 import org.example.service.CustomerService;
-import org.example.service.FinancialOperationService;
+import org.example.service.FOService;
 import org.example.service.SecurityService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class DashboardController {
     private SecurityService securityService;
 
     @Autowired
-    private FinancialOperationService financialOperationService;
+    private FOService FOService;
 
     @GetMapping("/dashboard")
     public String dashboard(Model model,
@@ -43,7 +43,7 @@ public class DashboardController {
                 Customer customer = customerService.getCustomer(user.getId());
                 List<FinancialOperation> operations;
                 if (!category.isEmpty() || !currency.isEmpty()) {
-                    operations = financialOperationService.filterOperations(user.getId(), currency, category);
+                    operations = FOService.filterOperations(user.getId(), currency, category);
 
                 } else {
                     operations = userService.getUserOperations(user.getUsername());

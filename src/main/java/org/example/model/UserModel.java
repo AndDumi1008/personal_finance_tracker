@@ -12,7 +12,7 @@ import org.example.model.lists.UserRole;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Table(name = "USERS")
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
