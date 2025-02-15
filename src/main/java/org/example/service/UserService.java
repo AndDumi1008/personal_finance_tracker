@@ -64,10 +64,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-    public boolean verifyPassword(UserModel userModel, String pass) {
-        String encodedPass = passwordEncoder.encode(pass);
-        return userRepository.findByUsername(userModel.getUsername()).getPassword().equals(encodedPass);
-    }
 
     public List<FinancialOperation> getUserOperations(String username) {
         UserModel user = findByUsername(username);

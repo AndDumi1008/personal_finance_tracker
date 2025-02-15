@@ -1,11 +1,9 @@
 package org.example.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import org.example.model.UserModel;
+import org.example.service.AuthService;
 import org.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +15,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthService authService;
+
     @GetMapping("/login")
     public String showLoginForm() {
         return "login";
@@ -24,25 +25,13 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
-        UserModel userModel = userService.findByUsername(username);
-        if (userModel != null && userService.verifyPassword(userModel, password)) {
-            return "redirect:/dashboard";
-        } else {
-            model.addAttribute("error", "Incorrect account");
-            return "login";
-        }
+        authService.authUser(username, password);
+        return "redirect:/dashboard";
     }
 
     @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
-        HttpSession session = request.getSession(false);
-        if (session != null) {
-            System.out.println("Session before invalidation: " + session.getAttributeNames());
-            session.invalidate();
-            System.out.println("Session invalidated.");
-        }
-        SecurityContextHolder.clearContext();
+        authService.logout(request);
         return "redirect:/login";
-
     }
 }
