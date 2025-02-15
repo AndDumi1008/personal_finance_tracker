@@ -19,12 +19,10 @@ public class CustomerService {
     }
 
     public Customer getCustomer(Long id) {
-
-        Customer returnedCustomer = customerRepository.findByAccountId(id);
-        return returnedCustomer;
+        return customerRepository.findByAccountId(id);
     }
 
-    public Customer createCustomer(RegisterUser user, Long userId) {
+    public void createCustomer(RegisterUser user, Long userId) {
         Customer customer = Customer.builder()
                 .accountId(userId)
                 .firstName(user.getFirstName())
@@ -33,7 +31,6 @@ public class CustomerService {
                 .creation_date(new Date())
                 .build();
         save(customer);
-        return customer;
     }
 
 

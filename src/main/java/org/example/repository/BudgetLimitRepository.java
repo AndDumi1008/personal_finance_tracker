@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BudgetLimitRepository extends JpaRepository<BudgetLimit, Double> {
+    BudgetLimit findByCustomerId(Long customerId);
 }

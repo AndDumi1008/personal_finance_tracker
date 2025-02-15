@@ -35,4 +35,9 @@ public class AuthService {
         }
         SecurityContextHolder.clearContext();
     }
+
+    public UserModel getLoggedInUser() {
+        return userService.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
 }

@@ -64,7 +64,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username);
     }
 
-
     public List<FinancialOperation> getUserOperations(String username) {
         UserModel user = findByUsername(username);
         if (user == null) {
