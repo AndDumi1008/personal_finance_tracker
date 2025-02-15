@@ -47,7 +47,7 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-    public void register(RegisterUser registerUser) {
+    public UserModel register(RegisterUser registerUser) {
         UserModel userModel = UserModel.builder()
                 .username(registerUser.getUsername())
                 .password(passwordEncoder.encode(registerUser.getPassword()))
@@ -57,16 +57,7 @@ public class UserService implements UserDetailsService {
         if (findByUsername(userModel.getUsername()) != null) {
             throw new IllegalArgumentException("User already exists");
         }
-        UserModel createdUserModel = userRepository.save(userModel);
-        Customer customer = Customer.builder()
-                .firstName(registerUser.getFirstName())
-                .lastName(registerUser.getLastName())
-                .accountId(createdUserModel.getId())
-                .creation_date(new Date())
-                .build();
-        // Add logic to save the customer to the database
-        customerService.save(customer);
-
+        return userRepository.save(userModel);
     }
 
     public UserModel findByUsername(String username) {

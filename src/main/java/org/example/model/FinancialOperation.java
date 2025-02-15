@@ -40,8 +40,9 @@ public class FinancialOperation {
     @Column(name = "customer_notes")
     private String customerNotes;
 
+//    TODO change UserModel to Customer
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "customer_id", nullable = false)
     private UserModel user;
 
     @Enumerated(EnumType.STRING)
