@@ -25,7 +25,6 @@ public class LoginController {
 
     @PostMapping("/login")
     public String loginUser(@RequestParam String username, @RequestParam String password, Model model) {
-        authService.authUser(username, password);
         return "redirect:/dashboard";
     }
 
